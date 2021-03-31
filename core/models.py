@@ -1,0 +1,18 @@
+from django.db import models
+from django.contrib.auth.models import User
+
+
+# Create your models here.
+class Evento(models.Model):
+    titulo = models.CharField(max_length=100)
+    descricao = models.TextField(blank=True, null=True)
+    data_evento = models.DateTimeField(verbose_name='Data do Evento')
+    data_criacao = models.DateTimeField(auto_now=True,verbose_name='Data de criação')  # opção para incluir a data atual nocampo
+    usuario = models.ForeignKey(User,on_delete=models.CASCADE)
+    # classe de meta dados na criação das tabelas.
+    class Meta:
+        db_table = 'evento'
+
+    # esta função retorna o titulo para apresentação no django admin
+    def __str__(self):
+        return self.titulo
