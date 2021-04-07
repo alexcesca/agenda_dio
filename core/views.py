@@ -24,6 +24,13 @@ def submit_evento(request):
         usuario = request.user
         Evento.objects.create(titulo=titulo, data_evento=data_evento, descricao=descricao, usuario=usuario)
     return redirect('/')
+@login_required(login_url='/login/')
+def delete_evento(request,id_evento):
+    evento = Evento.objects.get(id=id_evento)
+    usuario = request.user
+    if usuario == evento.usuario:
+        evento.delete()
+    return redirect('/')
 
 def login_user(request):
     return render(request,'login.html')
